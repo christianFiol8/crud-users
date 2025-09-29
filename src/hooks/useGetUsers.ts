@@ -26,18 +26,32 @@ const useGetUsers = () => {
     })
     };
 
-    const addUsertoList = (user : User) =>{
-      setUsers((prev) => [...prev,user,]);
-    }
+    const addUsertoList = (user : User, isEdit = false) =>{
+      setUsers(prev =>
+        isEdit
+          ? prev.map(u => String(u.id) === String(user.id) ? user : u)
+          : [...prev, user] 
+      );
+    };
+
+    const deleteUserFromList = async (id: string) => {
+      try {
+        await httpClient.delete(`users/delete/${id}`);
+        setUsers(prev => prev.filter(u => String(u.id) !== String(id)));
+      } catch (error) {
+        console.error('Error deleting user', error);
+      }
+    };
 
     useEffect(() => {
       getUsers();
   } , []);
 
-    return{
+    return {
       users,
       getUsers,
       addUsertoList,
+      deleteUserFromList,
       isLoading
     };
 };

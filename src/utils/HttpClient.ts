@@ -21,6 +21,12 @@ class HttpClient {
   async post(path :string , data : unknown){
     return fetch(`${this.url}/${path}` , this.getOptions('POST' , data))
   }
+  async put(path : string, data?: unknown){
+    return fetch(`${this.url}/${path}` , this.getOptions('PUT',data))
+  }
+  async delete(path : string){
+    return fetch(`${this.url}/${path}` , this.getOptions('DELETE'))
+  }
 };
 
 

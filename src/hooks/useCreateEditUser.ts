@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { CreateUserPayload, CreateUserResponse} from "../types/User.type";
+import type { CreateUserPayload, CreateUserResponse, User} from "../types/User.type";
 import HttpClient from "../utils/HttpClient";
 
 const httpClient = new HttpClient();
@@ -20,9 +20,25 @@ const useCreateEditUser = () => {
           return null;
         }
     };
+
+    const editUser = async (id: string, user: User) => {
+      setIsLoading(true);
+      try {
+        const response = await httpClient.put(`users/update/${id}`,user);
+        const userData = await response.json();
+        setIsLoading(false);
+        return userData as CreateUserResponse;
+      } catch (error) {
+        console.error('Error while editing user', error);
+        setIsLoading(false);
+        return null;
+      }
+    }
+
     return {
         createUser,
         isLoading,
+        editUser,
     };
 };
 

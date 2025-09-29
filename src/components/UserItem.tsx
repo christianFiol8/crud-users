@@ -3,13 +3,17 @@ import type {User} from "../types/User.type"
 
 type UserItemProps = {
   user : User;
+  onEdit: () => void;
+  onDelete : () => void;
 };
-const UserItem = ({user} : UserItemProps) => {
+const UserItem = ({user, onEdit , onDelete} : UserItemProps) => {
   return (
   <ListItem>
-    <>
-      <b>{user.id}:</b> {user.name} ({user.email});
-    </>
+    <div>
+      <span>{user.name} - {user.email}</span>
+      <button onClick={onEdit}>Editar</button>
+      <button onClick={onDelete}>Eliminar</button>
+    </div>
   </ListItem>)
 };
 

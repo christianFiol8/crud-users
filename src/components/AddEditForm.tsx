@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { User } from "../types/User.type";
 
 
@@ -8,15 +8,30 @@ const formDefaultValues : User = {
     name : '',
     created:'',
 }
+
+
 type AddEditFormProps = {
   onSubmit : (value: User) => void;
   loading : boolean;
+  editingUser?: User | null;
+  onCancelEdit?: () => void;
 };
 const AddEditForm = ({
   onSubmit,
   loading,
+  editingUser,
+  onCancelEdit
 }:AddEditFormProps) =>{
   const [formState , setFormState] = useState<User>(formDefaultValues);
+
+  useEffect(() => {
+    if (editingUser) {
+      setFormState({ id: editingUser.id, name: editingUser.name, email: editingUser.email, created: editingUser.created });
+    } else {
+      setFormState(formDefaultValues);
+    }
+  }, [editingUser]);
+
   const handleFormSubmit = (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(loading) return;
@@ -32,8 +47,6 @@ const AddEditForm = ({
         })
         }
   };
-
-
 
   //TODO update to non controlled components
     return(
@@ -56,12 +69,14 @@ const AddEditForm = ({
             onChange={handlInputChange('name')}
             disabled = {loading}
           />
-          <button type="submit" disabled = {loading}>
-            {
-              loading ? 'Guardando...' : 'Guardar'
-            }
-          </button>
-
+          {editingUser ? (
+        <>
+          <button type="submit" disabled={loading}>Actualizar</button>
+          <button type="button" onClick={onCancelEdit}>Cancelar</button>
+        </>
+      ) : (
+        <button type="submit" disabled={loading}>Agregar</button>
+      )}
         </form>
     );
 };
