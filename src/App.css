@@ -53,3 +53,25 @@ form button[type="button"] {
   background-color: #ae3333;
   color: white;
 }
+
+
+.list-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.list-item button {
+  margin-left: 6px;
+}
