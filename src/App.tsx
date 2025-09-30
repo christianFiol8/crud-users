@@ -5,6 +5,7 @@ import AddEditForm from "./components/AddEditForm";
 import type { User } from "./types/User.type";
 import useCreateEditUser from "./hooks/useCreateEditUser";
 import { useState } from "react";
+import "./App.css"
 
 function App() {
   const { users, addUsertoList, deleteUserFromList, isLoading: isFetchingUsers } = useGetUsers();
@@ -45,7 +46,7 @@ function App() {
 
   return (
     <div>
-      <h1>To do List</h1>
+      <h1>CRUD DE USUARIOS</h1>
       <AddEditForm
         onSubmit={handleOnSubmit}
         loading={isSubmitLoading}

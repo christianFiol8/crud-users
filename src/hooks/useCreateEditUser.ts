@@ -21,10 +21,10 @@ const useCreateEditUser = () => {
         }
     };
 
-    const editUser = async (id: string, user: User) => {
+    const editUser = async (_id: string, user: User) => {
       setIsLoading(true);
       try {
-        const response = await httpClient.put(`users/update/${id}`,user);
+        const response = await httpClient.put('users/update', { user });
         const userData = await response.json();
         setIsLoading(false);
         return userData as CreateUserResponse;
